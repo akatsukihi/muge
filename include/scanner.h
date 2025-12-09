@@ -5,12 +5,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "token.h"
 
 class Scanner{
 
     public:
     Scanner(std::string source):src(std::move(source)){}
-    std::vector<std::string>& scan_token();
+    std::vector<Token> scan_token();
     inline bool is_end() const{
         return current >= src.length();
     }
@@ -18,7 +19,7 @@ class Scanner{
 
     private:
     const std::string src;
-    const std::vector<std::string> tokens;
+    std::vector<Token> tokens;
     int current = 0;
     int start = 0;
     int line = 1;
