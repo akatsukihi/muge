@@ -1,10 +1,9 @@
 #pragma once
 #ifndef __TOKENTYPE_H__
-
 #define __TOKENTYPE_H__
 
 enum class TokenType{
-    /*单字符,运算符*/
+    //单字符,运算符
     LEFT_PAREN,
     RIGHT_PAREN,
     LEFT_BRACE,
@@ -24,11 +23,11 @@ enum class TokenType{
     GREATER_EQUAL,
     LESS,
     LESS_EQUAL,
-    /*数据类型*/
+    //数据类型
     IDENTIFIER,
     STRING,
     NUMBER,
-    /*关键字*/
+    //关键字
     AND,
     CLASS,
     ELSE,
@@ -47,6 +46,4 @@ enum class TokenType{
     WHILE,
     END_OF_FILE
 };
-
 #endif
-

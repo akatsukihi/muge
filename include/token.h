@@ -6,19 +6,20 @@
 #include <string>
 #include <any>
 #include "token_type.h"
+#include "log.h"
 
 class Token{
 
     public:
-    Token(TokenType token_type,std::string lexeme,int line,std::any obj):toke_type(toke_type),lexeme(std::move(lexeme)),line(line),obj(obj){};
+    Token(TokenType token_type,std::string lexeme,std::any obj,size_t line):toke_type(token_type),lexeme(std::move(lexeme)),obj(obj),line(line){};
     std::string to_string() const;
 
     private:
     const std::string lexeme;
     const TokenType toke_type;
-    const int line;
+    const size_t line;
     const std::any obj;
-    inline std::string&& tokentype_to_string(const TokenType& tktype)const{
+    inline std::string tokentype_to_string(const TokenType& tktype)const{
         switch (tktype){
             case TokenType::LEFT_PAREN:return "left round brackets";
             case TokenType::RIGHT_PAREN:return "right round brackets";
