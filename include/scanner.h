@@ -25,6 +25,7 @@ class Scanner{
     unsigned char read_char();
     void put_token(const TokenType& tktype);
     void put_token(const TokenType& tktype,const std::any& obj);
+    bool is_pair(unsigned char c);
 };
 
 

@@ -20,17 +20,18 @@ std::string read_file(const std::string& s){
 
 int main(int argc, char* argv[]) {
 
-    if(argc < 2){
-        std::cerr<<"Usage: muge.exe [file]\n";
-        return 1;
-    }
-    std::string file_name(argv[1]);
+    // if(argc < 2){
+    //     std::cerr<<"Usage: muge.exe [file]\n";
+    //     return 1;
+    // }
+    // std::string file_name(argv[1]);
+    std::string file_name("C:/Users/xiaoyang.zhang/Desktop/test.txt");
     try{
        std::string file = read_file(file_name);
        Scanner sc(file);
        std::vector<Token> tokens = sc.scan_tokens();
        for(auto x : tokens){
-            x.to_string();
+            std::cout<<x.to_string()<<std::endl;
        }
 
     }catch(const std::exception& e){

@@ -4,11 +4,6 @@ bool Scanner::is_end() const{
     return current >= src.length();
 }
 
-unsigned char Scanner::read_char(){
-    current++;
-    return src.at(current-1);
-}
-
 std::vector<Token> Scanner::scan_tokens(){
     while(!is_end()){
         start = current;
@@ -23,8 +18,13 @@ void Scanner::put_token(const TokenType& tktype){
 }
 
 void Scanner::put_token(const TokenType& tktype, const std::any& obj){
-    std::string s = src.substr(start,current);
+    std::string s = src.substr(start,current-start);
     tokens.emplace_back(tktype,s,obj,line);
+}
+
+unsigned char Scanner::read_char(){
+    current++;
+    return src.at(current-1);
 }
 
 void Scanner::scan_token(){
@@ -40,10 +40,18 @@ void Scanner::scan_token(){
         case '+':put_token(TokenType::PLUS);break;
         case ';':put_token(TokenType::SEMICOLON);break;
         case '*':put_token(TokenType::STAR);break;
+        case '\r':break;
+        case '\n':line++;break;
         default:
             Log::err(line,"Unexpected character.");
             break;
     }
+}
 
-
+bool Scanner::is_pair(unsigned char c){
+    if(is_end()){
+        return false;
+    }
+    current++;
+    return c==src.at(current-1);
 }
