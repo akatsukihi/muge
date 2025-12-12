@@ -32,8 +32,8 @@ class Token{
             case TokenType::SEMICOLON:return "semicolon";
             case TokenType::SLASH:return "slash";
             case TokenType::STAR:return "star";
-            case TokenType::BANG:return "bang";
-            case TokenType::BANG_EQUAL:return "bang equal";
+            case TokenType::EXCLAMATION:return "exclamation point";
+            case TokenType::EXCLAMATION_EQUAL:return "not equal";
             case TokenType::EQUAL:return "equal";
             case TokenType::EQUAL_EQUAL:return "equal equal";
             case TokenType::GREATER:return "greater";
