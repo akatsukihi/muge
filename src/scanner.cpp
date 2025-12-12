@@ -73,7 +73,11 @@ void Scanner::scan_token(){
         case '\n':line++;break;
         case '"':get_literal();break;
         default:
-            Log::err(line,"Unexpected character.");
+            if(is_number(c)){
+                get_number();
+            }else{
+                Log::err(line,"Unexpected character.");
+            }
             break;
     }
 }
@@ -102,6 +106,23 @@ unsigned char Scanner::next_char() const{
 }
 
 /**
+ * 获取下2个字符
+ */
+unsigned char Scanner::next_2char() const{
+    if((current+1)>=src.length()){
+        return '\0';
+    }
+    return src.at(current+1);
+}
+
+/**
+ * number check
+ */
+bool Scanner::is_number(unsigned char c) const{
+    return c>='0' && c<='9';
+}
+
+/**
  * 字符串字面量取得
  */
 void Scanner::get_literal(){
@@ -112,7 +133,6 @@ void Scanner::get_literal(){
             line++;
             cnt++;
             flg = true;
-            
         }
         read_char();
     }
@@ -124,3 +144,23 @@ void Scanner::get_literal(){
     std::string str = src.substr(start+1,current-start-2);
     put_token(TokenType::STRING,str);
 }
+
+
+
+void Scanner::get_number(){
+    while(is_number(next_char())){
+        read_char();
+    }
+    if(next_char() == '.' && is_number(next_2char())){
+        read_char();
+        while(is_number(next_char())) read_char();
+    }else{
+        if(!is_end() && next_char() == '.'){
+            Log::err(line,"double  is error!");
+        }else if(!is_end() && next_char() != '.'){
+            Log::err(line,"digital is error!");
+        }
+    }
+    put_token(TokenType::NUMBER,src.substr(start,current));
+}
+

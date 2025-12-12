@@ -27,7 +27,10 @@ class Scanner{
     void put_token(const TokenType& tktype,const std::any& obj);
     bool is_pair(unsigned char c);
     unsigned char next_char() const;
+    unsigned char next_2char() const;
     void get_literal();
+    bool is_number(unsigned char c) const;
+    void get_number();
 };
 
 
