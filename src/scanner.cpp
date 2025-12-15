@@ -1,6 +1,29 @@
 #include "scanner.h"
 
 /**
+ * 关键字定义
+ */
+std::unordered_map<std::string, TokenType> Scanner::key_words = {
+    {"and", TokenType::AND},
+    {"class", TokenType::CLASS},
+    {"else", TokenType::ELSE},
+    {"false", TokenType::FALSE},
+    {"for", TokenType::FOR},
+    {"fun", TokenType::FUN},
+    {"if", TokenType::IF},
+    {"nil", TokenType::NIL},
+    {"or", TokenType::OR},
+    {"print", TokenType::PRINT},
+    {"return", TokenType::RETURN},
+    {"super", TokenType::SUPER},
+    {"this", TokenType::THIS},
+    {"true", TokenType::TRUE},
+    {"var", TokenType::VAR},
+    {"while", TokenType::WHILE}
+};
+
+
+/**
  * 是否是文件结尾
  */
 bool Scanner::is_end() const{
@@ -75,6 +98,8 @@ void Scanner::scan_token(){
         default:
             if(is_number(c)){
                 get_number();
+            }else if(is_alpha(c)){
+                identifier();
             }else{
                 Log::err(line,"Unexpected character.");
             }
@@ -85,7 +110,7 @@ void Scanner::scan_token(){
 /**
  * 是否是复合型
  */
-bool Scanner::is_pair(unsigned char c){
+bool Scanner::is_pair(const unsigned char& c){
     if(is_end()){
         return false;
     }
@@ -118,12 +143,12 @@ unsigned char Scanner::next_2char() const{
 /**
  * number check
  */
-bool Scanner::is_number(unsigned char c) const{
+bool Scanner::is_number(const unsigned char& c) const{
     return c>='0' && c<='9';
 }
 
 /**
- * 字符串字面量取得
+ * 获取字符串字面量
  */
 void Scanner::get_literal(){
     bool flg = false;
@@ -146,7 +171,9 @@ void Scanner::get_literal(){
 }
 
 
-
+/**
+ * 获取数字
+ */
 void Scanner::get_number(){
     while(is_number(next_char())){
         read_char();
@@ -154,13 +181,36 @@ void Scanner::get_number(){
     if(next_char() == '.' && is_number(next_2char())){
         read_char();
         while(is_number(next_char())) read_char();
-    }else{
-        if(!is_end() && next_char() == '.'){
-            Log::err(line,"double  is error!");
-        }else if(!is_end() && next_char() != '.'){
-            Log::err(line,"digital is error!");
-        }
     }
     put_token(TokenType::NUMBER,src.substr(start,current));
 }
 
+/**
+ * 关键字，标识符解析
+ */
+void Scanner::identifier(){
+    while(is_alpha_number(next_char()))
+        read_char();
+    TokenType ttype = TokenType::IDENTIFIER;
+    std::string key = src.substr(start,current-start);
+    auto kwd = key_words.find(key);
+    if(kwd != key_words.end()){
+        ttype = kwd->second;
+    }
+    put_token(ttype);
+}
+
+
+/**
+ * 字母check
+ */
+bool Scanner::is_alpha(const unsigned char& c) const{
+    return (c>='a' && c<='z') || (c>='A' && c<='Z') || c == '_'; 
+}
+
+/**
+ * 标识符check
+ */
+bool Scanner::is_alpha_number(const unsigned char& c) const{
+    return is_alpha(c) || is_number(c);
+}

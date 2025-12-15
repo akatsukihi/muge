@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "token.h"
 
 class Scanner{
@@ -17,6 +18,7 @@ class Scanner{
     private:
     const std::string src;
     std::vector<Token> tokens;
+    static std::unordered_map<std::string,TokenType> key_words;
     size_t current = 0;
     size_t start = 0;
     size_t line = 1;
@@ -25,12 +27,15 @@ class Scanner{
     unsigned char read_char();
     void put_token(const TokenType& tktype);
     void put_token(const TokenType& tktype,const std::any& obj);
-    bool is_pair(unsigned char c);
+    bool is_pair(const unsigned char& c);
     unsigned char next_char() const;
     unsigned char next_2char() const;
     void get_literal();
-    bool is_number(unsigned char c) const;
+    bool is_number(const unsigned char& c) const;
     void get_number();
+    bool is_alpha(const unsigned char& c) const;
+    bool is_alpha_number(const unsigned char& c) const;
+    void identifier();
 };
 
 
