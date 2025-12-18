@@ -3,22 +3,20 @@
 #define __LITERAL_H__
 
 
-#include <variant>
+#include <any>
 #include "expre_ast.h"
-
-using LiteralValue = std::variant<double,std::string,bool,std::monostate>;
 
 class Literal:Expre{
 
     public:
-    explicit Literal(LiteralValue lv):lv(std::move(lv)){};
+    explicit Literal(std::any lv):lv(std::move(lv)){};
 
     void accept(ExpreVisitor& visitor) const override{
         visitor.visitor_literal(*this);   
     }
 
     private:
-    LiteralValue lv;
+    std::any lv;
 
 };
 
