@@ -13,6 +13,7 @@ class Group:Expre{
         visitor.visitor_group(*this);
     }
 
+    const expre_ptr& get_expre() const { return expre; }
 
     private:
     expre_ptr expre;

@@ -13,6 +13,10 @@ class Binary:Expre{
         visitor.visitor_binary(*this);
     }
 
+    const expre_ptr& get_left() const { return left; }
+    const std::string& get_opt() const { return opt; }
+    const expre_ptr& get_right() const { return right; }
+
     private:
     expre_ptr left;
     std::string opt;

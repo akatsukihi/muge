@@ -3,21 +3,22 @@
 #define __LITERAL_H__
 
 
-#include <any>
 #include "expre_ast.h"
+#include "data_type.h"
 
 class Literal:Expre{
 
     public:
-    explicit Literal(std::any lv):lv(std::move(lv)){};
+    explicit Literal(LiteralValue lv):lv(std::move(lv)){};
 
     void accept(ExpreVisitor& visitor) const override{
         visitor.visitor_literal(*this);   
     }
 
-    private:
-    std::any lv;
+    const LiteralValue& get_literal_value() const { return lv; }
 
+    private:
+    LiteralValue lv;
 };
 
 

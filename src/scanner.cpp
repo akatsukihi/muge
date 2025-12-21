@@ -38,18 +38,18 @@ std::vector<Token> Scanner::scan_tokens(){
         start = current;
         scan_token();
     }
-    tokens.emplace_back(TokenType::END_OF_FILE,"",nullptr,line);
+    tokens.emplace_back(TokenType::END_OF_FILE,"",std::monostate{},line);
     return tokens;
 }
 
 void Scanner::put_token(const TokenType& tktype){
-    put_token(tktype,nullptr);
+    put_token(tktype,std::monostate{});
 }
 
 /**
  * 解析结果按类型放入集合
  */
-void Scanner::put_token(const TokenType& tktype, const std::any& obj){
+void Scanner::put_token(const TokenType& tktype, const LiteralValue& obj){
     std::string s = src.substr(start,current-start);
     tokens.emplace_back(tktype,s,obj,line);
 }
@@ -166,7 +166,7 @@ void Scanner::get_literal(){
         return;
     }
     read_char();
-    std::string str = src.substr(start+1,current-start-2);
+    LiteralValue str = src.substr(start+1,current-start-2);
     put_token(TokenType::STRING,str);
 }
 
@@ -182,7 +182,8 @@ void Scanner::get_number(){
         read_char();
         while(is_number(next_char())) read_char();
     }
-    put_token(TokenType::NUMBER,src.substr(start,current));
+    LiteralValue val = std::stod(src.substr(start,current-start));
+    put_token(TokenType::NUMBER,val);
 }
 
 /**

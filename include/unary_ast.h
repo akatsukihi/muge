@@ -12,6 +12,8 @@ class Unary:Expre{
     void accept(ExpreVisitor& visitor) const override{
         visitor.visitor_unary(*this);
     }
+    const std::string& get_opt() const { return opt; }
+    const expre_ptr& get_right() const { return right; }
 
     private:
     std::string opt;
