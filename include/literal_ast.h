@@ -6,7 +6,7 @@
 #include "expre_ast.h"
 #include "data_type.h"
 
-class Literal:Expre{
+class Literal:public Expre{
 
     public:
     explicit Literal(LiteralValue lv):lv(std::move(lv)){};

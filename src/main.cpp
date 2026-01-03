@@ -4,6 +4,7 @@
 #include <memory>
 #include "scanner.h"
 #include "print_ast.h"
+#include "arena_ast.h"
 
 
 std::string read_file(const std::string& s){
@@ -37,14 +38,15 @@ int main(int argc, char* argv[]) {
        }
 
        // print AST test
-       auto expre = std::make_unique<Binary>(
-            std::make_unique<Unary>(
-                std::make_unique<Literal>(42.0),
+       Arena arena;
+       auto expre = arena.create<Binary>(
+            arena.create<Unary>(
+                arena.create<Literal>(42.0),
                 "-"
             ),
             "*",
-            std::make_unique<Group>(
-                std::make_unique<Literal>(3.14)
+            arena.create<Group>(
+                arena.create<Literal>(3.14)
             )
        );
        PrintAst printast;

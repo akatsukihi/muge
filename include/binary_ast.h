@@ -4,7 +4,7 @@
 
 #include "expre_ast.h"
 
-class Binary:Expre{
+class Binary:public Expre{
 
     public:
     Binary(expre_ptr left,std::string opt, expre_ptr right):left(std::move(left)),opt(std::move(opt)),right(std::move(right)){}

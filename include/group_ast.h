@@ -4,7 +4,7 @@
 
 #include "expre_ast.h"
 
-class Group:Expre{
+class Group:public Expre{
 
     public:
     explicit Group(expre_ptr expre):expre(std::move(expre)){}

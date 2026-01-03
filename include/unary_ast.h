@@ -4,7 +4,7 @@
 
 #include "expre_ast.h"
 
-class Unary:Expre{
+class Unary:public Expre{
 
     public:
     Unary(expre_ptr right, std::string opt):right(std::move(right)),opt(std::move(opt)){}

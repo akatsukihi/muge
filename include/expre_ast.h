@@ -29,5 +29,5 @@ class Expre{
     virtual void accept(ExpreVisitor& visitor) const = 0;
 };
 
-using expre_ptr = std::unique_ptr<Expre>;
+using expre_ptr = Expre*;
 #endif
